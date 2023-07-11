@@ -1,0 +1,34 @@
+number1 = 10
+number2 = 1.2551
+sName = "oscar"
+sw = False
+print(type(number1))
+print(type(number2))
+print(type(sName))
+print(type(sw))
+#print(f"mensaje a mostrar {number2}")
+
+# OPERADORES DE CADENA
+
+"""
+A continuacion se veran
+los diferentes operadores de cadena
+"""
+
+# Operador CONCATENACION (+)
+str1 = "hola"
+str2 = "mundo"
+str3 = str1 + " " + str2
+print(str3)
+
+# Operacion Repeticion (*)
+str3 = str1 * 3
+print(str3)
+
+# FORMATEO DE CADENAS
+
+#  Cadenas f-string 
+print(f"hola {str2} , {number2}")
+
+# Cadenas con formato
+print("Hola %s, %d" % ("mundo", number2))
