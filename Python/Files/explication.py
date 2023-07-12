@@ -6,6 +6,7 @@ leer = fd.read()
 #leer3 = fd.readlines()
 fd.seek(51)
 leer2 = fd.readline(6)
+fd.seek(0)
 leer3 = fd.readlines()
 fd.close()
 
@@ -13,7 +14,7 @@ fd.close()
 print(leer2)
 print(leer3)
 counter = 1
-for x in leer:
-    if x == "\n":
-        counter += 1
+for x in fd:
+    counter += 1
 print(counter)
+print(len(leer3))
