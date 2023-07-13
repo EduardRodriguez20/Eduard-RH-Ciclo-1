@@ -1,23 +1,7 @@
 import io
 
 employees = {}
-
-with open("Python/SR11/emlacme.dat", "r+") as f:
-    data_file = f.readline()
-    if not (data_file.startswith("ID;NOMBRE;HORASTRAB;VALHORA\n")):
-        f.write("ID;NOMBRE;HORASTRAB;VALHORA\n")
-    f.seek(28)
-    data = f.readlines()
-    for x in data:
-        y = x.split(";")
-        id = int(y[0])
-        name = y[1]
-        hour = y[2]
-        value = y[3]
-        employees[id] = {}
-        employees[id]["Name"] = name
-        employees[id]["Hours"] = hour
-        employees[id]["Value"] = value.strip()
+rute = "Python/SR/SR11/emlacme.dat"
 
 def verifyInt(message, id, hours, value):
     while True:
@@ -61,6 +45,39 @@ def verifyString(message):
         except Exception as e:
             print("Valida lo que ingresaste") 
 
+def read_data():
+    with open(rute, "r+") as f:
+        data_file = f.readline()
+        if not (data_file.startswith("ID;NOMBRE;HORASTRAB;VALHORA\n")):
+            f.write("ID;NOMBRE;HORASTRAB;VALHORA\n")
+        f.seek(28)
+        data = f.readlines()
+        for x in data:
+            y = x.split(";")
+            id = int(y[0])
+            name = y[1]
+            hour = y[2]
+            value = y[3]
+            employees[id] = {}
+            employees[id]["Name"] = name
+            employees[id]["Hours"] = hour
+            employees[id]["Value"] = value.strip()
+
+def update_employee(id, name, hour, value):
+    with open(rute, "a") as f:
+        f.write(f"{id};{name};{hour};{value}\n")
+
+def update_data ():
+    with open(rute, "w") as f:
+        f.write("ID;NOMBRE;HORASTRAB;VALHORA\n")
+        f.seek(28)
+        for x in employees.keys():
+            id = x
+            name = employees[x]["Name"]
+            hour = employees[x]["Hours"]
+            value = employees[x]["Value"]
+            f.write(f"{id};{name};{hour};{value}\n")
+
 def add_employee():
     print("\n","-" *60)
     print("\n\t\t--INGRESAR EMPLEADO--")
@@ -78,9 +95,7 @@ def add_employee():
     value = verifyInt("Digita el valor de la hora laboral: ", False, False, True)
     employees[id]["Value"] = value
     
-    with open("Python/SR11/emlacme.dat", "a") as f:
-        f.write(f"{id};{name};{hour};{value}\n")
-    
+    update_employee(id,name,hour, value)
     input("\nPresione cualquier tecla para volver al menu")
 
 def modify_employee():
@@ -158,8 +173,8 @@ def delete ():
 def show ():
     print("\n","-"*60)
     print("\n\t\t--EMPLEADOS INGRESADOS--")
-    print(f"\nEmpleados encontrados: {len(employees)}\n")
-    print("{:<10s} {:<25s} {:<20s} {:<10s}".format("ID", "NOMBRE", "HORAS LABORADAS", "VALOR HORA"))
+    print(f"\nEmpleados encontrados: {len(employees)}")
+    print("\n{:<10s} {:<25s} {:<20s} {:<10s}".format("ID", "NOMBRE", "HORAS LABORADAS", "VALOR HORA"))
     counter = 5
     round = 1
     for x in employees.keys():
@@ -167,8 +182,8 @@ def show ():
         hours = employees[x]["Hours"]
         value = employees[x]["Value"]
         print("{:<10} {:<25} {:<20} {:<10}".format(x, name, hours, value))
-        if round == counter:
-            print("Se ha mostrado la informacion de 5 empleados, quieres ver mas?")
+        if len(employees) != 5 and round == counter:
+            print("\nSe ha mostrado la informacion de 5 empleados, quieres ver mas?")
             print("1. Si")
             print("2. No")
             while True:
@@ -181,6 +196,7 @@ def show ():
                 except ValueError:
                     print("Ingresa un numero valido")
             if option == 1:
+                print("{:<10s} {:<25s} {:<20s} {:<10s}".format("ID", "NOMBRE", "HORAS LABORADAS", "VALOR HORA"))
                 counter += 5
             else:
                 break
@@ -207,7 +223,6 @@ def payroll():
     eps = g_salary * 0.04
     pension = g_salary * 0.04
     net_salary = int((g_salary - eps - pension) + aux_transport)
-
     print(f"\n\tLa nomina del empleado {name} es: ")
     print(f"\n- Salario Bruto: {g_salary}")
     print(f"- Auxilio de transporte: {aux_transport}")
@@ -257,7 +272,7 @@ def payroll_employees():
     
     input("\nPresione cualquier tecla para volver al menu")
 
-while True:
+def main_menu ():
     print("\n\t *** NOMINA ACME ***")
     print(f"\nEmpleados encontrados: {len(employees)}\n")
     print("\t\tMENU")
@@ -278,6 +293,11 @@ while True:
             break
         except ValueError:
             print("Ingresa un numero valido")
+    return option
+
+read_data()
+while True:
+    option = main_menu()
     if option == 1:
         add_employee()
     elif option == 2:
@@ -312,12 +332,4 @@ while True:
             continue
         break
     
-    with open("Python/SR11/emlacme.dat", "w") as f:
-        f.write("ID;NOMBRE;HORASTRAB;VALHORA\n")
-        f.seek(28)
-        for x in employees.keys():
-            id = x
-            name = employees[x]["Name"]
-            hour = employees[x]["Hours"]
-            value = employees[x]["Value"]
-            f.write(f"{id};{name};{hour};{value}\n")
+    update_data()
