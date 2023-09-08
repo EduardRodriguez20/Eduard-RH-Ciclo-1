@@ -1,43 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
     background-color: #f4f4f4;
-    
-}
-
-.presentation{
-    height: 100vh;
-    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-image: url(https://laud.udistrital.edu.co/sites/default/files/imagen-noticia/2022-06/El%20Cuarteto%20de%20Nos.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
+    font-family: 'Righteous', cursive;  
 }
 
-header {
-    background-color: #000000;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-    width: 100%;
-    height: 5%;
+@media (max-width: 425px){
+    .container main{
+        background-color: aqua;
+    }
 }
-
-h1{
-    font-size: 52px;
-    margin: 0;
-}
-
 
 nav {
+    background-color: black;
     color: #fff;
     display: flex;
     flex-direction: row;
-    width: 70%;
     justify-content: space-around;
+    width: 100%;
+
 }
 
 nav a{
@@ -45,8 +31,32 @@ nav a{
     text-decoration: none;
     border: 2px solid white;
     border-radius: 10%;
-    padding: 10px;
+    padding: 5px;
+    margin: 10px;
 }
+
+.presentation {
+    height: 70vh;
+    width: 60%;
+    margin: 50px;
+    display: flex;
+    border-radius: 40px;
+    background-image: url(https://laud.udistrital.edu.co/sites/default/files/imagen-noticia/2022-06/El%20Cuarteto%20de%20Nos.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.presentation p{
+    font-size: 68px;
+}
+
+h1{
+    font-size: 38px;
+    margin: 0;
+}
+
+
+
 
 .container {
     display: grid;
